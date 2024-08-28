@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('ctl_enfermedad_cronica', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('descripcion');
-            $table->string('sintomas');
-            $table->string('foto_sintoma');
+            $table->string('descripcion')->nullable();
+            $table->string('sintomas')->nullable();
+            $table->string('foto_sintoma')->nullable();
             $table->timestamps();
         });
     }
