@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Stmt\TryCatch;
 
 class UserController extends Controller
@@ -30,6 +32,29 @@ class UserController extends Controller
             return response()->json(
                [ "error"=>$e->getMessage()]
             ,500);
+        }
+    }
+
+    public function registro(UserRequest $request){
+        try {
+            DB::beginTransaction();
+            $request->validated();
+            $path = Storage::disk('usuario')->put('/', $request->file('foto_url'));
+            if($request->id_rol==2){
+                $user = User::create([
+                    'DUI'=>$request->dui,
+                    'nombre'=>$request->nombre,
+                    'apellido'=>$request->apellido,
+                    'email'=>$request->email,
+                    'password'=>Hash::make($request->password),
+                    'foto_url'=>$path,
+                    'id_rol'=>$request->id_rol,
+                    'fecha_nacimiento'=>$request->fecha_nacimiento,
+                    
+                ]);
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
         }
     }
     public function index()
