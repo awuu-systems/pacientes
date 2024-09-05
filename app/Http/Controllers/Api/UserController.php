@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Models\MntDoctor;
+use App\Models\MntPaciente;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use PhpParser\Node\Stmt\TryCatch;
 
 class UserController extends Controller
 {
@@ -36,25 +37,49 @@ class UserController extends Controller
     }
 
     public function registro(UserRequest $request){
+        
         try {
             DB::beginTransaction();
             $request->validated();
-            $path = Storage::disk('usuario')->put('/', $request->file('foto_url'));
+            $path = Storage::disk('usuario')->put('/', $request->file('foto_usuario'));
+            // dd($request);
+            $user = User::create([
+                'DUI'=>$request->DUI,
+                'nombre'=>$request->nombre,
+                'apellidos'=>$request->apellidos,
+                'email'=>$request->email,
+                'password'=>Hash::make($request->password),
+                'foto_usuario'=>$path,
+                'id_rol'=>$request->id_rol,
+                'fecha_nacimiento'=>$request->fecha_nacimiento,
+            ]);
+            // dd($user);
+            $usuario_rol = null;
             if($request->id_rol==2){
-                $user = User::create([
-                    'DUI'=>$request->dui,
-                    'nombre'=>$request->nombre,
-                    'apellido'=>$request->apellido,
-                    'email'=>$request->email,
-                    'password'=>Hash::make($request->password),
-                    'foto_url'=>$path,
-                    'id_rol'=>$request->id_rol,
-                    'fecha_nacimiento'=>$request->fecha_nacimiento,
-                    
+                $usuario_rol = MntDoctor::create([
+                    'id_usuario'=>$user->id,
+                    'id_especialidad'=>$request->id_especialidad
                 ]);
+                
+            }if ($request->id_rol==3){
+                $usuario_rol = MntPaciente::create([
+                    'nombre'=>$user->nombre,
+                    'id_usuario'=>$user->id,
+                    'diagnostico'=>$request->diagnostico,
+                    'peso'=>$request->peso,
+                    'alergias'=>$request->alergias,                 
+                ]);
+                
             }
-        } catch (\Throwable $th) {
-            //throw $th;
+            DB::commit();
+                return response()->json([
+                    'data'=>$usuario_rol,
+                ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'error'=>$e->getMessage()
+            ],500);
         }
     }
     public function index()

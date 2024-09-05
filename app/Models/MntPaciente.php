@@ -10,6 +10,7 @@ class MntPaciente extends Model
     use HasFactory;
     protected $table = "mnt_paciente";
     protected $fillable =[
+        "nombre",
         "id_usuario",
         "diagnostico",
         "peso",

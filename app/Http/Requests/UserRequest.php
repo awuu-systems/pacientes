@@ -29,11 +29,11 @@ class UserRequest extends FormRequest
             'email'=>'required|email',
             'fecha_nacimiento'=>'required|date',
             'id_rol'=>'required|integer',
-            'foto_url'=>'required|string',
-            'diagnostico'=>'string',
-            'peso'=>'string',
-            'alergias'=>'string',
-            'id_especialidad'=>'integer'
+            'foto_usuario'=>'required|file',
+            'diagnostico'=>'sometimes|string',
+            'peso'=>'sometimes|string',
+            'alergias'=>'sometimes|string',
+            'id_especialidad'=>'sometimes|integer'
         ];
     }
 }
