@@ -27,7 +27,9 @@ class UserController extends Controller
             }
             $token = $user->createToken('SaludTotal')->plainTextToken;
             return response()->json([
+                
                 'token' => $token,
+                
             ]);
         } catch (\Exception $e) {
             return response()->json(
@@ -72,8 +74,11 @@ class UserController extends Controller
                 
             }
             DB::commit();
+            $token = $user->createToken('SaludTotal')->plainTextToken;
                 return response()->json([
                     'data'=>$usuario_rol,
+                    'token'=>$token,
+                    'token_type'=>'Bearer'
                 ]);
         } catch (\Exception $e) {
             DB::rollBack();

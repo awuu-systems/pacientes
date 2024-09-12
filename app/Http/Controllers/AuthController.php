@@ -1,32 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Api;
-
-use App\Http\Controllers\Controller;
+namespace App\Http\Controllers;
+use app\Models\User;
 use Illuminate\Support\Facades\Auth;
-use App\Models\CtlSignoVital;
+use Validator;
+use \stdClass;
 use Illuminate\Http\Request;
 
-class MntSignoVitalRegistradoController extends Controller
+class AuthController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        try {
-            $usuario = Auth::check();
-            dd($usuario);
-            $id_usuario = $usuario->id;
-            $signos = CtlSignoVital::where('id_usuario', $id_usuario);
-            return response()->json([
-                'data'=>$signos
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error'=>$e->getMessage()
-            ]);
-        }
+        //
     }
 
     /**
@@ -34,7 +22,7 @@ class MntSignoVitalRegistradoController extends Controller
      */
     public function store(Request $request)
     {
-        
+        //
     }
 
     /**
