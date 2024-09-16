@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\MntDoctor;
@@ -11,6 +12,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\JsonDecoder;
+use Validator;
+use \stdClass;
 
 class UserController extends Controller
 {
@@ -36,6 +40,14 @@ class UserController extends Controller
                [ "error"=>$e->getMessage()]
             ,500);
         }
+    }
+
+    public function logout(Request $request){
+        // dd(json_encode(auth()->user()->tokens()));
+        $request->user()->tokens()->delete();
+        return [
+            'message' => 'Sesión cerrada correctamente',
+        ];
     }
 
     public function registro(UserRequest $request){

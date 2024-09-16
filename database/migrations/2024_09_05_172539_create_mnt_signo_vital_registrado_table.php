@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_paciente')->constrained('mnt_paciente');
             $table->foreignId('id_signo_vital')->constrained('ctl_signo_vital');
+            $table->string('cantidad');
             $table->timestamps();
         });
     }

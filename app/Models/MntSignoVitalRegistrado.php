@@ -12,6 +12,7 @@ class MntSignoVitalRegistrado extends Model
     protected $fillable =[
         "id_paciente",
         "id_signo_vital",
+        "cantidad"
     ];
     public function signoVital(){
         return $this->belongsTo(CtlSignoVital::class,'id_signo_vital');

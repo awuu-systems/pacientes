@@ -3,16 +3,27 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\MntEnfermedadRegistrada;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MntEnfermedadRegistradaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        try {
+            $enfermedad = MntEnfermedadRegistrada::where('id_paciente', $request->user()->paciente->id)->get();
+            return response()->json([
+                'data' => $enfermedad
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error'=>$e->getMessage()
+            ]);
+        }
     }
 
     /**
@@ -20,7 +31,23 @@ class MntEnfermedadRegistradaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $enfermedad = MntEnfermedadRegistrada::create(
+                [
+                    'id_enfermedad_cronica' => $request->id_enfermedad_cronica,
+                    'id_paciente'=>$request->user()->paciente->id
+                    ]
+            );
+            DB::commit();
+            return response()->json([
+                'data' => $enfermedad
+            ]);
+        } catch (\Exception $e) {
+        return response()->json([
+            'error'=>$e->getMessage()
+        ]);
+        }
     }
 
     /**

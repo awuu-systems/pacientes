@@ -53,4 +53,7 @@ class User extends Authenticatable
     public function rol(){
         return $this->belongsTo(CtlRol::class, 'id_rol');
     }
+    public function paciente(){
+        return $this->hasOne(MntPaciente::class, 'id_usuario');
+    }
 }
