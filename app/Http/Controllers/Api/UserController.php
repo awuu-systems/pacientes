@@ -33,6 +33,7 @@ class UserController extends Controller
             return response()->json([
                 
                 'token' => $token,
+                'user'=>$user
                 
             ]);
         } catch (\Exception $e) {
@@ -69,13 +70,13 @@ class UserController extends Controller
             ]);
             // dd($user);
             $usuario_rol = null;
-            if($request->id_rol==2){
+            if($request->id_rol==3){
                 $usuario_rol = MntDoctor::create([
                     'id_usuario'=>$user->id,
                     'id_especialidad'=>$request->id_especialidad
                 ]);
                 
-            }if ($request->id_rol==3){
+            }if ($request->id_rol==2){
                 $usuario_rol = MntPaciente::create([
                     'nombre'=>$user->nombre,
                     'id_usuario'=>$user->id,
