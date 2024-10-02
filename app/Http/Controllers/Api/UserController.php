@@ -100,9 +100,18 @@ class UserController extends Controller
             ],500);
         }
     }
-    public function index()
+    public function index(Request $request)
     {
-        //
+        try {
+            $users = User::where('id',$request->user()->id)->get();
+            return response()->json([
+                'data'=>$users
+            ],200);
+        } catch (\Exception $th) {
+            return response()->json([
+                'error'=>$th->getMessage()
+            ],500);
+        }
     }
 
     /**

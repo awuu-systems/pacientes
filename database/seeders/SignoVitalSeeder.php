@@ -14,9 +14,13 @@ class SignoVitalSeeder extends Seeder
     public function run(): void
     {
         DB::table('ctl_signo_vital')->insert([
-            ['nombre'=>'Peso'],
-            ['nombre'=>'Presión'],
-            ['nombre'=>'Glucosa'],
+            ['nombre'=>'Presión sistólica'],
+            ['nombre'=>'Presión diástolica'],
+            ['nombre'=>'Frecuencia respiratoria'],
+            ['nombre'=>'Temperatura (F°)'],
+            ['nombre'=>'Temperatura (C°)'],
+            ['nombre'=>'Pulso'],
+            ['nombre'=>'Oxígeno en la sangre'],
         ]);
     }
 }

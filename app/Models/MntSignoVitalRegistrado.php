@@ -11,8 +11,14 @@ class MntSignoVitalRegistrado extends Model
     protected $table = "mnt_signo_vital_registrado";
     protected $fillable =[
         "id_paciente",
-        "id_signo_vital",
-        "cantidad"
+        "presion_sistolica",
+        "presion_diastolica",
+        "frecuencia_respiratoria",
+        "temperatura_farenheit",
+        "temperatura_centigrados",
+        "pulso",
+        "oxigeno_en_la_sangre"
+
     ];
     public function signoVital(){
         return $this->belongsTo(CtlSignoVital::class,'id_signo_vital');

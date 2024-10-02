@@ -40,8 +40,13 @@ class MntSignoVitalRegistradoController extends Controller
             $signo = MntSignoVitalRegistrado::create(
                 [
                     'id_paciente'=>$request->user()->paciente->id,
-                    'id_signo_vital'=>$request->id_signo_vital,
-                    'cantidad'=>$request->cantidad,
+                    'presion_sistolica'=>$request->presion_sistolica,
+                    'presion_diastolica'=>$request->presion_diastolica,
+                    'frecuencia_respiratoria'=>$request->frecuencia_respiratoria,
+                    'temperatura_farenheit'=>$request->temperatura_farenheit,
+                    'temperatura_centigrados'=>$request->temperatura_centigrados,
+                    'pulso'=>$request->pulso,
+                    'oxigeno_en_la_sangre'=>$request->oxigeno_en_la_sangre,
                 ]
                 );
                 DB::commit();
@@ -51,7 +56,7 @@ class MntSignoVitalRegistradoController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'error'=>$e->getMessage()
-            ]);
+            ],500);
         }
     }
 

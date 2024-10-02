@@ -14,8 +14,13 @@ return new class extends Migration
         Schema::create('mnt_signo_vital_registrado', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_paciente')->constrained('mnt_paciente');
-            $table->foreignId('id_signo_vital')->constrained('ctl_signo_vital');
-            $table->string('cantidad');
+            $table->string('presion_sistolica');
+            $table->string('presion_diastolica');
+            $table->string('frecuencia_respiratoria');
+            $table->string('temperatura_farenheit');
+            $table->string('temperatura_centigrados');
+            $table->string('pulso');
+            $table->string('oxigeno_en_la_sangre');
             $table->timestamps();
         });
     }
