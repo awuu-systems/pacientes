@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\MntAlarma;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MntAlarmaController extends Controller
 {
@@ -20,7 +23,26 @@ class MntAlarmaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $alarma = MntAlarma::create(
+                [
+                    'id_paciente' => $request->user()->paciente->id,
+                    'id_estado' => $request->id_estado,
+                    'titulo' => $request->titulo,
+                    'descripcion'=> $request->descripcion,
+                    'fecha_inicio' => $request->fecha_inicio,
+                    'fecha_fin' => $request->fecha_fin,
+                    'dias_activa'=>$request->dias_activa
+                ]
+                );
+                DB::commit();
+                return response()->json(['data' => $alarma], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+            ]);
+        }
     }
 
     /**

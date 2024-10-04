@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Api\MntRegistroSintoma;
+use App\Models\MntRegistroSintoma;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,7 +15,7 @@ class MntRegistroSintomaController extends Controller
     public function index(Request $request )
     {
         try {
-            $sintomas = MntRegistroSintoma::where('id_paciente', $request->user()->paciente->id)->get();
+            $sintomas = MntRegistroSintoma::with('sintoma')->where('id_paciente', $request->user()->paciente->id)->get();
             return response()->json(['data' => $sintomas], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -33,7 +33,7 @@ class MntRegistroSintomaController extends Controller
             DB::beginTransaction();
             $enfermedad = MntRegistroSintoma::create(
                 [
-                    'id_sintoma' => $request->id_enfermedad_cronica,
+                    'id_sintoma' => $request->id_sintoma,
                     'fecha' => $request->fecha,
                     'descripcion'=>$request->descripcion,
                     'id_paciente'=>$request->user()->paciente->id
