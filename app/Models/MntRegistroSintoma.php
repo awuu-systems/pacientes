@@ -21,6 +21,6 @@ class MntRegistroSintoma extends Model
         return $this->belongsTo(CtlSintoma::class, "id_sintoma");
     }
     public function paciente(){
-        return $this->belongsTo(MntPaciente::class, "id_paciente");
+        return $this->belongsTo(related: MntPaciente::class, "id_paciente");
     }
 }

@@ -41,6 +41,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('/sintoma',[MntRegistroSintomaController::class, 'index']);
         Route::post('/sintoma', [MntRegistroSintomaController::class, 'store']);
         Route::post('/alarma',[MntAlarmaController::class,'store']);
+        Route::get('/alarma',[MntAlarmaController::class,'index']);
     });
     
 });

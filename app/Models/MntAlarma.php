@@ -17,7 +17,8 @@ class MntAlarma extends Model
         "fecha_inicio",
         "fecha_fin",
         "hora_inicio",
-        "dias_activa"
+        "dias_activa",
+        "todos_los_dias"
     ];
 
     public function paciente () {

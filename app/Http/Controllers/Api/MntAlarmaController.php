@@ -13,9 +13,16 @@ class MntAlarmaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+       try {
+            $alarmas = MntAlarma::where('id_paciente',$request->user()->paciente->id)->get();
+            return response()->json(['data' => $alarmas]);
+       } catch (\Exception $e) {
+        return response()->json([
+            'error'=>$e->getMessage()
+        ]);
+       }
     }
 
     /**
@@ -33,12 +40,15 @@ class MntAlarmaController extends Controller
                     'descripcion'=> $request->descripcion,
                     'fecha_inicio' => $request->fecha_inicio,
                     'fecha_fin' => $request->fecha_fin,
-                    'dias_activa'=>$request->dias_activa
+                    'dias_activa'=>$request->dias_activa,
+                    'todos_los_dias'=>$request->todos_los_dias,
+                    'hora_inicio' =>$request->hora_inicio
                 ]
                 );
                 DB::commit();
                 return response()->json(['data' => $alarma], 201);
         } catch (\Exception $e) {
+            
             return response()->json([
                 'error' => $e->getMessage(),
             ]);
