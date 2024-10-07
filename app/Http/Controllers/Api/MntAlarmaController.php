@@ -16,7 +16,7 @@ class MntAlarmaController extends Controller
     public function index(Request $request)
     {
        try {
-            $alarmas = MntAlarma::where('id_paciente',$request->user()->paciente->id)->get();
+            $alarmas = MntAlarma::with('estado')->where('id_paciente',$request->user()->paciente->id)->get();
             return response()->json(['data' => $alarmas]);
        } catch (\Exception $e) {
         return response()->json([
@@ -46,11 +46,34 @@ class MntAlarmaController extends Controller
                 ]
                 );
                 DB::commit();
-                return response()->json(['data' => $alarma], 201);
+                return response()->json(['data' => $alarma], 200);
         } catch (\Exception $e) {
-            
+            DB::rollBack();
             return response()->json([
                 'error' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function cambiarEstado (Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $id_alarma = $request->id_alarma;
+            if($id_alarma){
+                $alarma = MntAlarma::where('id_alarma', $id_alarma)->update([
+                    'id_estado'=>'2'
+                ]);
+                $alarma->save();
+                return response()->json([
+                    'data'=>$alarma
+                ]);
+
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'data'=>$e
             ]);
         }
     }
