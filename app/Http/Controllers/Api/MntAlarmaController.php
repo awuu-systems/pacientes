@@ -55,26 +55,23 @@ class MntAlarmaController extends Controller
         }
     }
 
-    public function cambiarEstado (Request $request)
+    public function cambiarEstado (Request $request, string $id)
     {
         try {
-            DB::beginTransaction();
-            $id_alarma = $request->id_alarma;
-            if($id_alarma){
-                $alarma = MntAlarma::where('id_alarma', $id_alarma)->update([
-                    'id_estado'=>'2'
-                ]);
-                $alarma->save();
-                return response()->json([
-                    'data'=>$alarma
-                ]);
-
+            $alarma = MntAlarma::where('id', $id)->first();
+            if($alarma && $alarma->id_estado == 1){
+                $alarma->id_estado = 2;
+            }else if($alarma && $alarma->id_estado == 2){
+                $alarma->id_estado = 1;
             }
+            $alarma->save();
+            DB::commit();
+            return response()->json(['data' => $alarma], 200);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
                 'data'=>$e
-            ]);
+            ],500);
         }
     }
 

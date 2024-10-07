@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\MntCitaMedicaAsignada;
+use App\Models\MntPaciente;
 use Illuminate\Http\Request;
 
 class MntCitaMedicaAsignadaController extends Controller
@@ -10,9 +12,21 @@ class MntCitaMedicaAsignadaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        try {
+            // $citaMedicaAsignada = MntCitaMedicaAsignada::with( 'usuario')->where('id_doctor', $request->user()->doctor->id)->get();
+            $citaMedicaAsignada = MntPaciente::with(['usuario','citas' => function ($query)use ($request){
+                $query->where('id_doctor', $request->user()->doctor->id);
+            }])->get();
+            return response()->json([
+                'data'=>$citaMedicaAsignada
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error'=>$e->getMessage()
+            ]);
+        }
     }
 
     /**
@@ -20,7 +34,24 @@ class MntCitaMedicaAsignadaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            
+            $citaMedica = MntCitaMedicaAsignada::create(
+                [
+                    "id_doctor"=> $request->user()->doctor->id,
+                    "id_paciente"=>$request->id_paciente,
+                    "fecha"=>$request->fecha,
+                    "hora"=>$request->hora,
+                    ]
+                );
+                return response()->json([
+                    'data'=>$citaMedica
+                ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' =>$e->getMessage() ,
+            ]);
+        }
     }
 
     /**

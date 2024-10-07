@@ -3,12 +3,15 @@
 use App\Http\Controllers\Api\CtlSignoVitalController;
 use App\Http\Controllers\Api\CtlSintomaController;
 use App\Http\Controllers\Api\MntAlarmaController;
+use App\Http\Controllers\Api\MntCitaMedicaAsignadaController;
 use App\Http\Controllers\Api\MntEnfermedadRegistradaController;
+use App\Http\Controllers\Api\MntPacienteController;
 use App\Http\Controllers\Api\MntRegistroSintomaController;
 use App\Http\Controllers\Api\MntSignoVitalRegistradoController;
 use App\Http\Controllers\Api\UserController;
 use App\Models\CtlSignoVital;
 use App\Models\MntAlarma;
+use App\Models\MntCitaMedicaAsignada;
 use App\Models\MntEnfermedadRegistrada;
 use App\Models\MntRegistroSintoma;
 use Illuminate\Http\Request;
@@ -43,6 +46,13 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::post('/alarma',[MntAlarmaController::class,'store']);
         Route::get('/alarma',[MntAlarmaController::class,'index']);
         Route::put('/estado-alarma',[MntAlarmaController::class, 'cambiarEstado']);
+    });
+
+    Route::prefix('doctor')->group(function(){
+        Route::get('/pacientes',[MntPacienteController::class,'index']);
+        Route::post('/cita-medica',[MntCitaMedicaAsignadaController::class,'store']);
+        Route::get('/cita-medica',[MntCitaMedicaAsignadaController::class, 'index']);
+
     });
 
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\MntPaciente;
 use Illuminate\Http\Request;
 
 class MntPacienteController extends Controller
@@ -12,7 +13,16 @@ class MntPacienteController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $paciente = MntPaciente::with('usuario')->get();
+            return response()->json([
+                'data' => $paciente,
+            ],200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+            ],500);
+        }
     }
 
     /**

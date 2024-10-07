@@ -21,4 +21,7 @@ class MntPaciente extends Model
         return $this->belongsTo(User::class,'id_usuario');
     }
 
+    public function citas(){
+        return $this->hasMany(MntCitaMedicaAsignada::class, 'id_paciente');
+    }
 }

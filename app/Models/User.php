@@ -56,4 +56,7 @@ class User extends Authenticatable
     public function paciente(){
         return $this->hasOne(MntPaciente::class, 'id_usuario');
     }
+    public function doctor(){
+        return $this->hasOne(MntDoctor::class, 'id_usuario');
+    }
 }
