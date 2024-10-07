@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CtlMedicamentoController;
 use App\Http\Controllers\Api\CtlSignoVitalController;
 use App\Http\Controllers\Api\CtlSintomaController;
 use App\Http\Controllers\Api\MntAlarmaController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Api\MntPacienteController;
 use App\Http\Controllers\Api\MntRegistroSintomaController;
 use App\Http\Controllers\Api\MntSignoVitalRegistradoController;
 use App\Http\Controllers\Api\UserController;
+use App\Models\CtlMedicamento;
 use App\Models\CtlSignoVital;
 use App\Models\MntAlarma;
 use App\Models\MntCitaMedicaAsignada;
@@ -52,7 +54,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('/pacientes',[MntPacienteController::class,'index']);
         Route::post('/cita-medica',[MntCitaMedicaAsignadaController::class,'store']);
         Route::get('/cita-medica',[MntCitaMedicaAsignadaController::class, 'index']);
-
+        Route::get('/medicamentos',[CtlMedicamentoController::class,'index']);
     });
 
 });

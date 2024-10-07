@@ -15,10 +15,10 @@ class MntCitaMedicaAsignadaController extends Controller
     public function index(Request $request)
     {
         try {
-            // $citaMedicaAsignada = MntCitaMedicaAsignada::with( 'usuario')->where('id_doctor', $request->user()->doctor->id)->get();
-            $citaMedicaAsignada = MntPaciente::with(['usuario','citas' => function ($query)use ($request){
-                $query->where('id_doctor', $request->user()->doctor->id);
-            }])->get();
+            $citaMedicaAsignada = MntCitaMedicaAsignada::with('paciente')->where('id_doctor', $request->user()->doctor->id)->get();
+            // $citaMedicaAsignada = MntPaciente::with(['usuario','citas' => function ($query)use ($request){
+            //     $query->where('id_doctor', $request->user()->doctor->id);
+            // }])->get();
             return response()->json([
                 'data'=>$citaMedicaAsignada
             ]);
