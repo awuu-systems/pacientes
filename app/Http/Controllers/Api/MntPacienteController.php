@@ -19,11 +19,11 @@ class MntPacienteController extends Controller
             $paciente = MntPaciente::with('usuario')->get();
             return response()->json([
                 'data' => $paciente,
-            ],200);
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
-            ],500);
+            ], 500);
         }
     }
 
@@ -45,7 +45,7 @@ class MntPacienteController extends Controller
             return $acc;
         }, []);
 
-        $pacientes = MntPaciente::with('registrosSintomas', 'signosVitales')
+        $pacientes = MntPaciente::with('registrosSintomas', 'registrosSintomas.sintoma', 'signosVitales')
         ->whereIn('id', $idPacientes)->get();
 
         return $pacientes;
