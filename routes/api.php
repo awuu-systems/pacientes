@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\CtlSintomaController;
 use App\Http\Controllers\Api\MntAlarmaController;
 use App\Http\Controllers\Api\MntCitaMedicaAsignadaController;
 use App\Http\Controllers\Api\MntEnfermedadRegistradaController;
+use App\Http\Controllers\Api\MntMedicamentoAsignadoController;
 use App\Http\Controllers\Api\MntPacienteController;
 use App\Http\Controllers\Api\MntRegistroSintomaController;
 use App\Http\Controllers\Api\MntSignoVitalRegistradoController;
@@ -15,6 +16,7 @@ use App\Models\CtlSignoVital;
 use App\Models\MntAlarma;
 use App\Models\MntCitaMedicaAsignada;
 use App\Models\MntEnfermedadRegistrada;
+use App\Models\MntMedicamentoAsignado;
 use App\Models\MntRegistroSintoma;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -56,6 +58,9 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::post('/cita-medica',[MntCitaMedicaAsignadaController::class,'store']);
         Route::get('/cita-medica',[MntCitaMedicaAsignadaController::class, 'index']);
         Route::get('/medicamentos',[CtlMedicamentoController::class,'index']);
+        Route::get('/asignar-medicamento/{id}',[MntMedicamentoAsignadoController::class, 'show']);
+        Route::post('/asignar-medicamento',[MntMedicamentoAsignadoController::class,'store']);
+        Route::delete('/medicamento-asignado/{id}',[MntMedicamentoAsignadoController::class, 'destroy']);
     });
 
 });
