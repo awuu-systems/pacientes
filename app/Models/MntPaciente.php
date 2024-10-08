@@ -24,4 +24,14 @@ class MntPaciente extends Model
     public function citas(){
         return $this->hasMany(MntCitaMedicaAsignada::class, 'id_paciente');
     }
+
+    public function registrosSintomas()
+    {
+        return $this->hasMany(MntRegistroSintoma::class, 'id_paciente');
+    }
+
+    public function signosVitales()
+    {
+        return $this->hasMany(MntSignoVitalRegistrado::class, 'id_paciente');
+    }
 }

@@ -52,6 +52,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
 
     Route::prefix('doctor')->group(function(){
         Route::get('/pacientes',[MntPacienteController::class,'index']);
+        Route::get('/pacientes-detalles', [MntPacienteController::class, 'pacientesDetalles']);
         Route::post('/cita-medica',[MntCitaMedicaAsignadaController::class,'store']);
         Route::get('/cita-medica',[MntCitaMedicaAsignadaController::class, 'index']);
         Route::get('/medicamentos',[CtlMedicamentoController::class,'index']);
