@@ -45,7 +45,7 @@ class MntPacienteController extends Controller
             return $acc;
         }, []);
 
-        $pacientes = MntPaciente::with('registrosSintomas', 'registrosSintomas.sintoma', 'signosVitales')
+        $pacientes = MntPaciente::with('usuario','registrosSintomas', 'registrosSintomas.sintoma', 'signosVitales')
         ->whereIn('id', $idPacientes)->get();
 
         return $pacientes;
