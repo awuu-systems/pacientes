@@ -15,7 +15,7 @@ class MntCitaMedicaAsignadaController extends Controller
     public function index(Request $request)
     {
         try {
-            $citaMedicaAsignada = MntCitaMedicaAsignada::with('paciente')->where('id_doctor', $request->user()->doctor->id)->get();
+            $citaMedicaAsignada = MntCitaMedicaAsignada::with('paciente.usuario')->where('id_doctor', $request->user()->doctor->id)->get();
             // $citaMedicaAsignada = MntPaciente::with(['usuario','citas' => function ($query)use ($request){
             //     $query->where('id_doctor', $request->user()->doctor->id);
             // }])->get();
@@ -57,9 +57,18 @@ class MntCitaMedicaAsignadaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function PacienteCita(Request $request)
     {
-        //
+        try {
+            $citaMedica = MntCitaMedicaAsignada::where('id_paciente', $request->user()->paciente->id)->with('paciente', 'doctor.usuario')->get();
+            return response()->json([
+                'data'=>$citaMedica
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error'=>$e->getMessage()
+            ]);
+        }
     }
 
     /**

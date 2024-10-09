@@ -50,6 +50,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::post('/alarma',[MntAlarmaController::class,'store']);
         Route::get('/alarma',[MntAlarmaController::class,'index']);
         Route::put('/estado-alarma',[MntAlarmaController::class, 'cambiarEstado']);
+        Route::get('/cita-medica-paciente',[MntCitaMedicaAsignadaController::class, 'PacienteCita']);
     });
 
     Route::prefix('doctor')->group(function(){
