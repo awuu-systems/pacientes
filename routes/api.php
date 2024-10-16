@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CtlEspecialidadController;
 use App\Http\Controllers\Api\CtlMedicamentoController;
 use App\Http\Controllers\Api\CtlSignoVitalController;
 use App\Http\Controllers\Api\CtlSintomaController;
@@ -11,13 +12,6 @@ use App\Http\Controllers\Api\MntPacienteController;
 use App\Http\Controllers\Api\MntRegistroSintomaController;
 use App\Http\Controllers\Api\MntSignoVitalRegistradoController;
 use App\Http\Controllers\Api\UserController;
-use App\Models\CtlMedicamento;
-use App\Models\CtlSignoVital;
-use App\Models\MntAlarma;
-use App\Models\MntCitaMedicaAsignada;
-use App\Models\MntEnfermedadRegistrada;
-use App\Models\MntMedicamentoAsignado;
-use App\Models\MntRegistroSintoma;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +27,7 @@ Route::get('/user', [UserController::class, 'getUser']);
 Route::prefix('auth')->group(function(){
     Route::post('/iniciar-sesion',[UserController::class,  'login']);
     Route::post('/registro',[UserController::class, 'registro']);
+    Route::get('/especialidad',[CtlEspecialidadController::class, 'index']);
 });
 
 Route::middleware(['auth:sanctum'])->group(function(){
@@ -49,7 +44,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::post('/sintoma', [MntRegistroSintomaController::class, 'store']);
         Route::post('/alarma',[MntAlarmaController::class,'store']);
         Route::get('/alarma',[MntAlarmaController::class,'index']);
-        Route::put('/estado-alarma',[MntAlarmaController::class, 'cambiarEstado']);
+        Route::put('/estado-alarma/{id}',[MntAlarmaController::class, 'cambiarEstado']);
         Route::get('/cita-medica-paciente',[MntCitaMedicaAsignadaController::class, 'PacienteCita']);
     });
 

@@ -55,7 +55,7 @@ class MntAlarmaController extends Controller
         }
     }
 
-    public function cambiarEstado (Request $request, string $id)
+    public function cambiarEstado (string $id)
     {
         try {
             $alarma = MntAlarma::where('id', $id)->first();
