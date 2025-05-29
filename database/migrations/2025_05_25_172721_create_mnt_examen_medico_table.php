@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mnt_registro_sintoma', function (Blueprint $table) {
+        Schema::create('mnt_examen_medico', function(Blueprint $table){
             $table->id();
+            $table->foreignId('id_cita_medica')->constrained('mnt_cita_medica_asignada');
+            $table->foreignId('id_examen')->constrained('ctl_examen');
             $table->timestamps();
-            $table->foreignId('id_paciente')->constrained('mnt_paciente');
-            $table->foreignId('id_sintoma')->constrained('ctl_sintoma');
-            $table->date('fecha');
-            $table->string('descripcion')->nullable();
         });
     }
 
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mnt_registro_sintoma');
+        Schema::dropIfExists('mnt_examen_medico');
     }
 };

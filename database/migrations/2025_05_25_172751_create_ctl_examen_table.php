@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('mnt_alarma', function (Blueprint $table){
-            $table->boolean('todos_los_dias')->nullable();
+        Schema::create('ctl_examen', function(Blueprint $table){
+            $table->id();
+            $table->string('nombre');
+            $table->string('descripcion');
+            $table->timestamp();
         });
+
     }
 
     /**
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('mnt_alarma', function (Blueprint $table){
-            $table->dropColumn('todos_los_dias');
-        });
+        Schema::dropIfExists('ctl_examen');
     }
 };
