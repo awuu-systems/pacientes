@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ctl_signo_vital', function (Blueprint $table) {
+        Schema::create('mnt_consulta', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('descripcion')->nullable();
+            $table->string('detalle');
+            $table->string('diagnostico');
+            $table->foreignId('id_cita_medica')->constrained('mnt_cita_medica_asignada');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ctl_signo_vital');
+        Schema::dropIfExists('mnt_consulta');
     }
 };

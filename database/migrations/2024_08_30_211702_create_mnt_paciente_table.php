@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->foreignId('id_usuario')->constrained('users');
-            $table->string('diagnostico');
             $table->string('peso');
             $table->string('alergias');
             $table->softDeletes();

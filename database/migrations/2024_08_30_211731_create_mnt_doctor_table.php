@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('mnt_doctor', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_especialidad')->constrained('ctl_especialidad');
             $table->foreignId('id_usuario')->constrained('users');
             $table->softDeletes();
             $table->timestamps();
