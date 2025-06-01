@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('mnt_medicamento_asignado', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_medicamento')->constrained('ctl_medicamento');
-            $table->foreignId('id_cita_medica')->constrained('mnt_cita_medica_asignada');
+            $table->string('nombre');
             $table->string('dosis');
+            $table->foreignId('id_cita_medica')->constrained('mnt_cita_medica_asignada');
             $table->timestamps();
         });
     }
